@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sample</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    </head>
+    <body ng-app="mainApp" ng-controller="sampleController" >
+        <div>
+            <table border="0">
+                <form id="myForm">
+                    <tr>
+                        <td>First Name:</td>
+                        <td><input type="text" ng-model="student.firstName"></td>
+                    </tr>
+                    <tr>
+                        <td>Last Name:</td>
+                        <td><input type="text" ng-model="student.lastName"></td>
+                    </tr>
+                    <tr>
+                        <td>Fees:</td>
+                        <td><input type="text" ng-model="student.fees"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit"></td>
+                    </tr>
+                </form>
+            </table>
+
+            <div id="results" style="display: none;">
+                <table border="0">
+                    <tr>
+                        <td>Name:</td>
+                        <td>{{student.fullName()|uppercase}} </td>
+                    </tr>
+                    <tr>
+                        <td>Name:</td>
+                        <td>{{student.fullName()|lowercase}} </td>
+                    </tr>
+                    <tr>
+                        <td>Fees:</td>
+                        <td>{{student.fees|currency:'@'}} </td>
+                    </tr>
+                
+                </table>
+                <ul>
+                    <li ng-repeat="subject in student.subjects|orderBy:marks">
+                        {{subject.name+" marks: "+subject.marks}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <script>
+            var mainApp=angular.module('mainApp',[]);
+            mainApp.controller('sampleController',function($scope){
+                $scope.student={
+                    firstName:'',
+                    lastName:'',
+                    fees:'',
+                    subjects:[
+                        {name:'Maths',marks:'75'},
+                        {name:'Physics',marks:'85'},
+                        {name:'Chemistry',marks:'95'},
+                    ],
+                    fullName:function(){
+                        var studenObject;
+                        studenObject=$scope.student;
+                        return studenObject.firstName+" "+studenObject.lastName;
+                    }
+                };
+            });
+        </script>
+
+        <script>
+            let myForm=document.getElementById('myForm');
+            myForm.addEventListener('submit',function(){
+                document.getElementById("results");
+                let results = document.getElementById("results");
+                results.style.display = "block";
+            });
+        </script>
+    </body>
+</html>
